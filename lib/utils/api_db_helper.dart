@@ -38,11 +38,11 @@ mixin ApiDBHelper {
   }
 
   static Future<bool> insert(
-      {String key, Object content, int ttlInHours}) async {
+      {String key, Object content, int ttlInMilliSeconds}) async {
     Map<String, Object> data = {
       _KEY_APIKEY: key,
       _KEY_API_DATA: content,
-      _KEY_TTL: ttlInHours ?? -1,
+      _KEY_TTL: ttlInMilliSeconds ?? -1,
       _KEY_API_DATE_TIME: DateTime.now().toString()
     };
 

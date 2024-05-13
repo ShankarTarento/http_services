@@ -18,9 +18,15 @@ class HttpService {
 
   static Future<http.Response> post(
       {@required Uri apiUri,
-      int ttl = -1,
+      Duration ttl,
       Map<String, dynamic> headers,
       Map<dynamic, dynamic> body}) async {
+    int ttlInMilliSeconds = -1;
+
+    if (ttl != null) {
+      ttlInMilliSeconds = ttl.inMilliseconds;
+    }
+
     final ApiObj apiObj =
         ApiObj(url: apiUri.toString(), headers: headers, body: body);
     var contents = await ApiDBHelper.getDataByApiObj(apiObj: apiObj);
@@ -40,7 +46,9 @@ class HttpService {
 
           String key = CryptographyHelper.getEncryptedApiObj(apiObj: apiObj);
           await ApiDBHelper.insert(
-              key: key, content: contents, ttlInHours: ttl);
+              key: key,
+              content: contents,
+              ttlInMilliSeconds: ttlInMilliSeconds);
           debugPrint("==============>post method successful");
 
           return response;
@@ -134,9 +142,14 @@ class HttpService {
 
   static Future<http.Response> get(
       {@required Uri apiUri,
-      int ttl = -1,
+      Duration ttl,
       Map<String, dynamic> headers,
       Map<String, dynamic> body}) async {
+    int ttlInMilliSeconds = -1;
+
+    if (ttl != null) {
+      ttlInMilliSeconds = ttl.inMilliseconds;
+    }
     final ApiObj apiObj =
         ApiObj(url: apiUri.toString(), headers: headers, body: body);
     var contents = await ApiDBHelper.getDataByApiObj(apiObj: apiObj);
@@ -155,7 +168,9 @@ class HttpService {
 
           String key = CryptographyHelper.getEncryptedApiObj(apiObj: apiObj);
           await ApiDBHelper.insert(
-              key: key, content: contents, ttlInHours: ttl);
+              key: key,
+              content: contents,
+              ttlInMilliSeconds: ttlInMilliSeconds);
           debugPrint("==============>get method successful");
           return response;
         } else {
