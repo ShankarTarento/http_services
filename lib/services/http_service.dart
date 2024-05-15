@@ -69,7 +69,7 @@ class HttpService {
           data['headers'],
         ),
       );
-      debugPrint("==============>post method successful");
+      debugPrint("==============>post data from cache");
       return response;
     }
   }
@@ -190,7 +190,7 @@ class HttpService {
           data['headers'],
         ),
       );
-      debugPrint("==============>get method successful");
+      debugPrint("==============>get data from cache");
       return response;
     }
   }
